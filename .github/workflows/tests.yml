@@ -1,0 +1,30 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash -el {0}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mamba-org/setup-micromamba@v2
+        with:
+          environment-file: environment.yml
+          cache-environment: true
+      - name: Configure and build
+        run: |
+          export PETSC_DIR="$CONDA_PREFIX"
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_Fortran_COMPILER=mpifort -DCMAKE_C_COMPILER=mpicc \
+                -DMPIEXEC_PREFLAGS="--oversubscribe"
+          cmake --build build -j 2
+      - name: Manufactured-solution checks (ctest, 4 MPI ranks)
+        env:
+          OMPI_MCA_btl_vader_single_copy_mechanism: none
+          OMPI_MCA_rmaps_base_oversubscribe: "1"
+        run: ctest --test-dir build --output-on-failure
