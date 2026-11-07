@@ -1,0 +1,8 @@
+build*/
+*.mod
+*.o
+*.so
+*.a
+*.out
+*.log
+__pycache__/

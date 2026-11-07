@@ -1,0 +1,4 @@
+# Performance logging: per-event time, flops and message counts
+# (KSPSolve, MatMult, VecScatter, DMGlobalToLocal) plus the DMDA layout.
+-log_view
+-dm_view

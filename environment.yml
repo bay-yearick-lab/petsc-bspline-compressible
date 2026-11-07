@@ -1,0 +1,17 @@
+# conda-forge environment that builds and runs the solver:
+#   micromamba create -f environment.yml && micromamba activate petsc
+# PETSc 3.15.1 with complex scalars, FFTW (MPI) and Open MPI. hypre is pinned to
+# the release this PETSc build was linked against.
+name: petsc
+channels:
+  - conda-forge
+dependencies:
+  - petsc=3.15.1=complex_hc1b1e3d_1
+  - hypre=2.22.0=mpi_openmpi*
+  - fftw=*=mpi_openmpi*
+  - openmpi=4.1
+  - gfortran_linux-64
+  - gcc_linux-64
+  - cmake>=3.13
+  - make
+  - pkg-config

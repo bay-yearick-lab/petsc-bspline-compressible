@@ -1,0 +1,7 @@
+# Wall-normal line solves with the compiled-in Krylov methods
+# (GMRES for the Dirichlet-constrained mass matrix, CG for the SPD mass matrix)
+# and an incomplete LU preconditioner. Solver statistics are printed per solve.
+-pc_type ilu
+-ksp_rtol 1e-14
+-ksp_atol 1e-14
+-ksp_converged_reason
